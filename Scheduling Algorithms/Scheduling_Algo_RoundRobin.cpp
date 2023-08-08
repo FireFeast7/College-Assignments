@@ -51,7 +51,7 @@ class Scheduling{
     int current_time = 0;
     int completed_tasks = 0;
     int curr ;
-    queue<int> readyQ;
+    qukeue<int> readyQ;
 	public : Scheduling(int len){
 		n = len;
 	}
