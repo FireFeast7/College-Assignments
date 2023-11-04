@@ -61,10 +61,14 @@ select * from training t left join student s on s.t_id = t.t_id where t.t_year =
 
 /*Query 6*/
 select count(t_comp_name) as list from training where t_year < 2023 ;
+OR
+SELECT COUNT(t_comp_name) AS list
+FROM (SELECT t_comp_name FROM training WHERE t_year < 2023) AS subquery;
 
 /*Query 7*/
- select s.s_name from student s inner join placementDrive p on s.Drive_id = p.Drive_id where location = "New York" and p.Comp_name = "Company A";
-
+select s.s_name from student s inner join placementDrive p on s.Drive_id = p.Drive_id where location = "New York" and p.Comp_name = "Company A";
+OR
+select s_name from student where Drive_id in (select Drive_id from placementDrive where location = "New York" and Comp_name = "Company A");
 /*Query 8*/
 select s.s_name from student s left join placementDrive p on s.Drive_id = p.Drive_id where p.Comp_name = "Company D";
 
