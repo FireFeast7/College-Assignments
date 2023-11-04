@@ -85,7 +85,7 @@ BEGIN
     -- Start a loop to process each record from the cursor.
     read_loop: LOOP
         -- Fetch the student_name and marks for the current record.
-        FETCH cur INTO student_name, marks;
+        FETCH  cur INTO student_name, marks;
 
         -- Check if there are no more records to process.
         IF done THEN
@@ -108,3 +108,25 @@ $$
 DELIMITER ;
 
 
+
+
+create procedure calculate_loop()
+begin
+declare done int default 0;
+declare student_name varchar(25);
+declare marks int;
+declare grade varchar(25);
+declare cur Cursor for Select Name,Total_marks from Stud_marks;
+declare continue handler for not found set done = 1;
+open cur;
+read_loop: LOOP
+fetch cur into student_name,marks;
+if done then
+leave read_loop;
+end if;
+set grade = calculate_grade(marks);
+INSERT INTO Result (Name, Total_marks, Class) VALUES (student_name, marks, grade);
+end LOOP;
+close cur;
+end;
+$$
