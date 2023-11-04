@@ -74,7 +74,7 @@ BEGIN
     DECLARE marks INT;
 
     -- Declare a cursor to select data from the source table.
-    DECLARE cur CURSOR FOR SELECT Name, Total_marks FROM YourSourceTable; -- Replace with the actual table name
+    DECLARE cur CURSOR FOR SELECT Name, Total_marks FROM Stud_marks;
 
     -- Define a handler to detect the end of the cursor result set.
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
