@@ -1,0 +1,34 @@
+db.createCollection("moviereviews");
+
+db.moviereview.insertMany([{ Movie: "Pulp Fiction", Rating: 9.0, Reviewer: "Carol", Comment: "Quentin Tarantino's unique storytelling and memorable characters make this a must-see." }, { Movie: "The Dark Knight", Rating: 9.2, Reviewer: "David", Comment: "Heath Ledger's portrayal of the Joker is unforgettable. A dark and thrilling superhero film." }, { Movie: "Forrest Gump", Rating: 8.7, Reviewer: "Emily", Comment: "Heartwarming and filled with life lessons. Tom Hanks is exceptional." }, { Movie: "The Godfather", Rating: 9.4, Reviewer: "Frank", Comment: "A cinematic masterpiece with an epic story and brilliant acting." }, { Movie: "Avatar", Rating: 8.0, Reviewer: "Grace", Comment: "Revolutionary visuals, but the story falls a bit short. Still worth watching." } ]);
+
+db.moviereview.aggregate([{$match : {Rating : {$gte : 9}}}]);
+db.moviereview.aggregate([{$match :{Movie : /p/}}]);
+
+db.moviereview.aggregate([{$group : {_id : "$Rating",count : {$sum : 1}}}]);
+db.moviereview.aggregate([{$group :{_id:"$Movie", maxRating : {$max : "$Rating"}}}]);
+
+db.moviereview.aggregate([{$project : {_id :0 , Rating : "$_id"}}]);
+
+db.moviereview.aggregate([{$sort : {Rating : -1}}]);
+
+db.moviereview.aggregate([{$limit : 3}]);
+
+db.moviereview.aggregate([{$limit : 3},{$sort : {Rating : -1}}]);
+
+db.moviereview.aggregate([{$skip :1}]);
+
+db.moviereview.aggregate([{$limit : 3},{$sort : {Rating : -1}} , {$skip :-1}]);
+
+db.moviereview.distinct("Reviewer");
+
+db.moviereview.aggregate([{$count : "Total Entities"}]);
+// [ { 'Total Entities': 6 } ]
+
+db.moviereview.aggregate([{$match : {Rating : 9}},{$count : "Total Movies with 9"}]);
+
+db.moviereview.createIndex({ Movie: 1 });
+
+db.moviereview.createIndex({ Reviewer: 1, Rating: -1 });
+
+db.moviereview.createIndex({ Reviewer: 1 }, { unique: true });
