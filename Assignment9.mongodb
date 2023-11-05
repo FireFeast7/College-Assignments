@@ -1,0 +1,67 @@
+db.MovieReview.insertMany([
+{title:"Inception",rating:10,review :"Mind Blowing Movie" , actors :["Leo Caprio","Tom Hardy"]},
+{title : "Shawshank Redemption",rating : 9.5, review : "Bombastic",actors :["Matt Damon","Morgan Freeman"]},
+{title: "Forrest Gump" , rating : 8.9, review : "Mesmerizing" , actors: ["Tom Hanks","Amir Khan"]}
+]);
+
+db.MovieReview.find();
+
+db.MovieReview.updateOne({title : "Forrest Gump"}, {$set : {rating : 8.8}});
+
+db.MovieReview.updateOne({title : "Forrest Gump"}, {$set : {actors : ['Tom Hanks' , 'Heath Ledger']}});
+
+db.MovieReview.updateMany({} , {$inc : {rating : 0.2}});
+
+db.MovieReview.updateOne({title :'Forrest Gump'} , {$inc : {rating : -0.2}});
+
+db.MovieReview.updateOne({rating  : {$lt : 9}} , {$set : {title : 'Thugs of Hindustan'}});
+
+db.MovieReview.updateOne({review : "Mesmerizing"} , {$mul : {rating : -0.5}});
+
+db.MovieReview.find({title : /e/});
+
+db.MovieReview.find({title : /Shawshank/});
+
+db.MovieReview.find({rating : {$gt : 9}});  // gt,lte,ne,gte,etc.
+
+db.MovieReview.find({$and : [{rating : {$lt : 10}}, {title : /s/}]});
+
+db.MovieReview.updateMany({rating : {$lt : 0}},{$mul : {rating : -1}});
+
+db.MovieReview.find({$or : [{rating : {$gt : 5}},{review : /z/}]});
+
+db.MovieReview.updateMany({}, { $inc: { rating: 3 } }, { multi: true });
+
+db.MovieReview.updateMany({ releaseYear: { $lt: 2000 } }, { $set: { rating: 2 } }, { multi: true });
+
+db.MovieReview.updateMany({title : "The Matrix" },{$set : {rating : 4 , actors : ['Keanu Reeves']}},{ upsert : true});
+
+db.MovieReview.updateMany({title : "The Matrix" },{$set : {rating : 6}},{ upsert : true});
+
+db.MovieReview.insertOne({title : "The Last Ship" ,rating : 8 , 
+actors : [ { name : "Leo Caprio" , charactter : "Tom Chandler"},{name : "Bridget Regan" , character : "Sasha Cooper"}]
+});
+
+db.MovieReview.updateMany({review : /s/} , {$push : { actors : "SRK"}});
+
+db.MovieReview.updateMany({review : /s/} , {$pull : { actors : "SRK"}});
+
+db.MovieReview.aggregate([{$unwind : "$actors"}]); //breaks the array into multiple documents of same type
+
+db.MovieReview.findOne({title : "The Last Ship" }).actors;
+
+db.MovieReview.findOne({title : "The Last Ship" }).actors[0].name;
+
+db.MovieReview.findOne({title : "The Last Ship" }).actors[0].charactter;
+
+db.MovieReview.findOne({title : "The Last Ship" }).actors;
+[
+  { name: 'Leo Caprio', charactter: 'Tom Chandler' },
+  { name: 'Bridget Regan', character: 'Sasha Cooper' }
+]
+
+db.MovieReview.findOne({title : "The Last Ship" }).actors[1].name;
+
+
+
+
