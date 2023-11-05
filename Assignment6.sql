@@ -63,6 +63,7 @@ fetch p_cursor into intern_name,id,dept;
 if done then
 leave label;
 end if;
+if not exists (select 1 from Employee where E_id=I_id and E_dept = I_dept) then 
 insert into Employee (Name,E_id,E_dept) values (intern_name,id,dept);
 end LOOP;
 close p_cursor;
