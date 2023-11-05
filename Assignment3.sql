@@ -73,15 +73,15 @@ select s_name from student where Drive_id in (select Drive_id from placementDriv
 select s.s_name from student s left join placementDrive p on s.Drive_id = p.Drive_id where p.Comp_name = "Company D";
 
 /*Query 9*/
-create view simple_view as select s.s_name,s.s_branch,s.cgpa,t.t_id,t.t_comp_name,t_fees from student s left join training t on s.t_id = t.t_id;
+create view complex_view as select s.s_name,s.s_branch,s.cgpa,t.t_id,t.t_comp_name,t_fees from student s left join training t on s.t_id = t.t_id;
 
 /*Query 10*/
-insert into simple_view (s_name,s_branch,cgpa,t_id,t_comp_name,t_fees) values ("John" , "CSE",5,2,"Training Z",3222);
+insert into complex_view (s_name,s_branch,cgpa,t_id,t_comp_name,t_fees) values ("John" , "CSE",5,2,"Training Z",3222);
 ERROR 1471 (HY000): The target table simple_view of the INSERT is not insertable-into
 
-update simple_view set s_name = "John" where t_id = 4;
+update complex_view set s_name = "John" where t_id = 4;
 
-delete from simple_view where cgpa = 9;
+delete from complex_view where cgpa = 9;
 ERROR 1288 (HY000): The target table simple_view of the DELETE is not updatable
 
-drop view simple_view;
+drop view complex_view;
