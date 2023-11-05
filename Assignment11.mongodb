@@ -1,0 +1,68 @@
+db.shop.insertMany([{cust_id: 1 , amount : 300 , mode : "Online"},
+{cust_id:2 ,amount : 400 , mode: "Online"},
+{cust_id : 3 , amount : 250 , mode : "Offline"},
+{cust_id : 2 , amount : 350 , mode : "Online" },
+{cust_id : 1 , amount : 400 , mode : "Offline"}
+]);
+
+var mapFunction = function(){emit(this.cust_id,this.amount)};
+
+var reduceFunction = function(key,values){return Array.sum(values)};
+
+db.shop.mapReduce(mapFunction , reduceFunction ,{ out : "OrderTotals"});
+// { result: 'OrderTotals', ok: 1 }
+Assignment1> db.OrderTotals.find();
+[
+  { _id: 1, value: 700 },
+  { _id: 2, value: 750 },
+  { _id: 3, value: 250 }
+]
+
+db.shop.mapReduce(mapFunction , reduceFunction ,{query : {mode : "Online" }, out : "OrderTotals"});
+// { result: 'OrderTotals', ok: 1 }
+Assignment1> db.OrderTotals.find();
+[ { _id: 1, value: 300 }, { _id: 2, value: 750 } ]
+
+
+db.race.insertMany([
+    { name: "John", rank: 3, age: 24 },
+    { name: "Alice", rank: 2, age: 20 },
+    { name: "David", rank: 4, age: 23 },
+    { name: "Emily", rank: 1, age: 21 },
+    { name: "Michael", rank: 5, age: 25 },
+    { name: "Sophia", rank: 3, age: 22 },
+    { name: "Oliver", rank: 4, age: 24 },
+    { name: "Ava", rank: 2, age: 20 },
+    { name: "Ethan", rank: 5, age: 23 },
+    { name: "Mia", rank: 3, age: 22 },
+    { name: "Noah", rank: 4, age: 24 },
+    { name: "Isabella", rank: 1, age: 21 }
+]);
+
+var map = function(){emit(this.rank,this.age)};
+var reduce = function(key,values){return Array.sum(values)};
+
+db.race.mapReduce(map,reduce,{out : "sum_ranks"});
+// { result: 'sum_ranks', ok: 1 }
+Assignment1> db.sum_ranks.find();
+[
+  { _id: 5, value: 48 },
+  { _id: 1, value: 42 },
+  { _id: 3, value: 68 },
+  { _id: 2, value: 20 },
+  { _id: 4, value: 47 }
+]
+
+var map = function(){emit(this.rank,this.age)};
+var reduce = function(key,values){return Array.avg(values)};
+db.race.mapReduce(map,reduce,{out : "avg_ranks"});
+// { result: 'avg_ranks', ok: 1 }
+Assignment1> db.avg_ranks.find();
+[
+  { _id: 5, value: 24 },
+  { _id: 1, value: 21 },
+  { _id: 3, value: 22.666666666666668 },
+  { _id: 2, value: 20 },
+  { _id: 4, value: 23.5 }
+]
+
