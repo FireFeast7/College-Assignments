@@ -1,6 +1,10 @@
 db.createCollection("moviereviews");
 
-db.moviereview.insertMany([{ Movie: "Pulp Fiction", Rating: 9.0, Reviewer: "Carol", Comment: "Quentin Tarantino's unique storytelling and memorable characters make this a must-see." }, { Movie: "The Dark Knight", Rating: 9.2, Reviewer: "David", Comment: "Heath Ledger's portrayal of the Joker is unforgettable. A dark and thrilling superhero film." }, { Movie: "Forrest Gump", Rating: 8.7, Reviewer: "Emily", Comment: "Heartwarming and filled with life lessons. Tom Hanks is exceptional." }, { Movie: "The Godfather", Rating: 9.4, Reviewer: "Frank", Comment: "A cinematic masterpiece with an epic story and brilliant acting." }, { Movie: "Avatar", Rating: 8.0, Reviewer: "Grace", Comment: "Revolutionary visuals, but the story falls a bit short. Still worth watching." } ]);
+db.moviereview.insertMany([{ Movie: "Pulp Fiction", Rating: 9.0, Reviewer: "Carol", Comment: "Quentin Tarantino's unique storytelling and memorable characters make this a must-see." },
+{ Movie: "The Dark Knight", Rating: 9.2, Reviewer: "David", Comment: "Heath Ledger's portrayal of the Joker is unforgettable. A dark and thrilling superhero film." },
+{ Movie: "Forrest Gump", Rating: 8.7, Reviewer: "Emily", Comment: "Heartwarming and filled with life lessons. Tom Hanks is exceptional." },
+{ Movie: "The Godfather", Rating: 9.4, Reviewer: "Frank", Comment: "A cinematic masterpiece with an epic story and brilliant acting." }, 
+{ Movie: "Avatar", Rating: 8.0, Reviewer: "Grace", Comment: "Revolutionary visuals, but the story falls a bit short. Still worth watching." } ]);
 
 db.moviereview.aggregate([{$match : {Rating : {$gte : 9}}}]);
 db.moviereview.aggregate([{$match :{Movie : /p/}}]);

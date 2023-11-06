@@ -40,7 +40,7 @@ select * from Student where (s_branch = "CSE") and s_name like "A%" or s_name li
 select count(distinct Comp_name) as Different_Companies from placementDrive;
 
 /*Query 3*/
-update training set t_fees = t_fees*1.5 where t_year = 2023;
+update training set t_fees = t_fees + t_fees*1.5 where t_year = 2023;
 
 /*Query 4*/
 delete from student where cgpa < 4;
@@ -60,3 +60,6 @@ select s.s_name ,t.t_fees from student s , training t where t.t_id = s.t_id orde
 
 /*Query 9*/
 select p.Comp_name,s.s_name,p.location,p.package from student s, placementDrive p where s.Drive_id = p.Drive_id and package in (8,10);
+
+create index index_1 on student(s_id,cgpa);
+create unique index index_2 on student(s_id,cgpa,dob,s_branch); 
